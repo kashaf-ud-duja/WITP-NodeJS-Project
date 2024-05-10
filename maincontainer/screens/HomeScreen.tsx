@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View, Text, FlatList, Image, StyleSheet,ActivityIndicator} from 'react-native';
-
+import { SafeAreaView, View, Text, FlatList, Image, StyleSheet,ActivityIndicator, TouchableOpacity} from 'react-native';
+import ItemDetailsScreen from './ItemDetailsScreen';
 const MovieItem = ({ title, imageUrl, imdbRating }) => (
     
   <View style={styles.movieItem}>
-    <Image source={{ uri: imageUrl }} style={styles.movieImage} />
+     {/* <TouchableOpacity onPress={navigation.navigate(ItemDetailsScreen)}><Image source={{ uri: imageUrl }} style={styles.movieImage} /></TouchableOpacity> */}
     <View style={styles.movieDetails}>
-      <Text>{title}</Text>
+      <TouchableOpacity onPress={ItemDetailsScreen}><Text>{title}</Text></TouchableOpacity>
     </View>
   </View>
 );
 
-export default function HomeScreen()  {
+export default function HomeScreen({navigation})  {
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -52,6 +52,7 @@ export default function HomeScreen()  {
         onEndReachedThreshold={0.1} 
         ListFooterComponent={renderFooter}
       />
+      <TouchableOpacity onPress={navigation.navigate(ItemDetailsScreen)}><Image source={{ uri: "https://www.mariab.pk/cdn/shop/files/MB-F24-502Lemon_1800x1800.jpg?v=1713967328" }} style={styles.movieImage} /></TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
   },
+
   movieImage: {
     width: 250,
     height: 250,
@@ -73,4 +75,5 @@ const styles = StyleSheet.create({
   movieDetails: {
     flex: 1,
   },
-});
+}
+);
