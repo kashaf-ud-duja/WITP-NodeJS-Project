@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text , StyleSheet} from 'react-native';
 
-export default function DetailsScreen ({navigation}){
+export default function Profile ({navigation}){
 
 return(
 

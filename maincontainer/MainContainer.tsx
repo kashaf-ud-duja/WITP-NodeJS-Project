@@ -6,10 +6,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import HomeScreen from './screens/HomeScreen';
 import SettingScreen from './screens/SettingsScreen';
-import DetailScreen from './screens/DetailsScreen';
+import DetailScreen from './screens/Profile';
+import Profile from './screens/Profile';
+import { Settings } from 'react-native';
 
 const homeName = 'Home';
-const DetailsName = 'Details';
+const ProfileName = 'Profile';
 const SettingName = 'Settings';
 
 const Tab = createBottomTabNavigator();
@@ -26,7 +28,7 @@ export default function MainContainer(){
           let routeName = route.name;
           if (routeName === homeName) {
             iconName = focused ? "home" : "home-outline";
-          } else if (routeName === DetailsName) {
+          } else if (routeName === ProfileName) {
             iconName = focused ? "search" : "search-outline";
           } else if (routeName == SettingName) {
             iconName = focused ? "add-circle" : "add-circle-outline";
@@ -56,8 +58,8 @@ export default function MainContainer(){
         }}
       />
       <Tab.Screen
-        name={DetailsName}
-        component={DetailScreen}
+        name={ProfileName}
+        component={Profile}
         options={{
           headerShown: false,
         }}

@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, View, Text, FlatList, Image, StyleSheet,ActivityIndicator, TouchableOpacity} from 'react-native';
 import ItemDetailsScreen from './ItemDetailsScreen';
-const MovieItem = ({ title, imageUrl, imdbRating }) => (
-    
-  <View style={styles.movieItem}>
-     {/* <TouchableOpacity onPress={navigation.navigate(ItemDetailsScreen)}><Image source={{ uri: imageUrl }} style={styles.movieImage} /></TouchableOpacity> */}
+import { useNavigation } from "@react-navigation/native";
+
+const navigation = useNavigation();
+    const MovieItem = ({ title, imageUrl, price, onPress }) => (
+  <TouchableOpacity style={styles.movieItem} onPress={onPress}>
+    <Image source={{ uri: imageUrl }} style={styles.movieImage} />
     <View style={styles.movieDetails}>
-      <TouchableOpacity onPress={ItemDetailsScreen}><Text>{title}</Text></TouchableOpacity>
-    </View>
-  </View>
+      <Text>{title}</Text>
+      <Text>Price: {price}</Text>
+      </View>
+  </TouchableOpacity>
 );
+
 
 export default function HomeScreen({navigation})  {
 
+  
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
@@ -38,7 +43,12 @@ export default function HomeScreen({navigation})  {
       };
   
   const renderItem = ({ item }) => (
-    <MovieItem title={item.title} imageUrl={item.image} imdbRating={item.price}  />
+    <MovieItem title={item.title} imageUrl={item.image} price={item.price} onPress={() => navigation.navigate('movieDetails', {
+      title: item.title,
+      imageUrl: item.image,
+      price: item.price,
+      description: item.description
+    })}/>
   );
 
   return (
@@ -52,7 +62,7 @@ export default function HomeScreen({navigation})  {
         onEndReachedThreshold={0.1} 
         ListFooterComponent={renderFooter}
       />
-      <TouchableOpacity onPress={navigation.navigate(ItemDetailsScreen)}><Image source={{ uri: "https://www.mariab.pk/cdn/shop/files/MB-F24-502Lemon_1800x1800.jpg?v=1713967328" }} style={styles.movieImage} /></TouchableOpacity>
+      <TouchableOpacity onPress={navigation.navigate('ItemDetailsScreen')}><Image source={{ uri: "https://www.mariab.pk/cdn/shop/files/MB-F24-502Lemon_1800x1800.jpg?v=1713967328" }} style={styles.movieImage} /></TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -60,6 +70,7 @@ export default function HomeScreen({navigation})  {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10,
   },
   movieItem: {
     flexDirection: 'column',
